@@ -3,22 +3,11 @@ import logo from '../img/logo.png';
 import './App.scss';
 import Leftbar from "./Leftbar";
 import TicketsList from "./TicketsList";
-import data from '../tickets'
 import {Provider} from "react-redux";
 import store from "../redux/index";
 
 
 class App extends Component {
-	constructor(props) {
-		super(props)
-
-		const tickets = data.tickets.map((item, index) => {
-			return {...item, id: index}
-		})
-
-		this.state = {tickets}
-	}
-
 	render() {
 
 		return (
@@ -34,7 +23,7 @@ class App extends Component {
 								<Leftbar/>
 							</div>
 							<div className="col-md-8">
-								<TicketsList tickets={this.state.tickets}/>
+								<TicketsList/>
 							</div>
 						</div>
 					</div>

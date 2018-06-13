@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Currency from "./Currency";
-import Transfer from "./Transfer";
+import Stop from "./Stop";
 
 class Leftbar extends Component {
 	render() {
@@ -11,7 +11,7 @@ class Leftbar extends Component {
 					<Currency/>
 				</div>
 				<div className="leftbar__block">
-					<Transfer/>
+					<Stop/>
 				</div>
 			</div>
 		);

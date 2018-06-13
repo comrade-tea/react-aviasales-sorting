@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import TranslatedCurrency from "./currencyProvider/TranslatedCurrency";
 
 class Ticket extends Component {
+
 	render() {
 		const {ticket} = this.props
 
 		return (
 			<div className="card-ticket">
 				<div className="card-ticket__leftbar">
-					<button className='btn-warning'>Купить за {ticket.price}</button>
+					<button className='btn-warning'>Купить за <TranslatedCurrency>{ticket.price}</TranslatedCurrency></button>
 				</div>
 				<div className="card-ticket__rightbar">
 					<div className="ct-details">

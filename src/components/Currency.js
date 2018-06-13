@@ -1,31 +1,53 @@
 import React, {Component} from 'react';
-// import {} from 'bootstrap/dist/js/bootstrap.bundle'
+import {connect} from "react-redux";
+import {changeCurrency} from "../ducks/currency";
+
 import PropTypes from 'prop-types';
 
 class Currency extends Component {
 	render() {
-		const currency = [{id: 0, value: "RUB"}, {id: 1,value: "USD"}, {id: 2, value: "EUR"}];
+		const currency = [{id: 0, value: "RUB"}, {id: 1, value: "USD"}, {id: 2, value: "EUR"}];
 		const buttonList = currency.map(item => {
-			return <button className="btn btn-outline-primary" key={item.id} onClick={this.handleChangeCurrency(item.value)}>{item.value}</button>
+			return (
+				<button className={this.setButtonStyles(item.value)} key={item.id}
+				        onClick={this.handleChangeCurrency(item.value)}>
+					{item.value}
+				</button>)
 		})
-
-		console.log("----", buttonList)
 
 		return (
 			<div>
-				<h6>ВАЛЮТА</h6>
-				<div className="btn-group btn-group-toggle">
+				<h5>ВАЛЮТА</h5>
+				<div className="btn-group btn-group-fluid btn-group-toggle">
 					{buttonList}
 				</div>
 			</div>
 		);
 	}
 
+	setButtonStyles = (value) => {
+		const {currency} = this.props;
+		let cssClasses = "btn ";
+
+		if (currency === value) {
+			cssClasses += 'btn-primary'
+		}
+		else {
+			cssClasses += 'btn-outline-primary';
+		}
+
+		return cssClasses;
+	}
+
 	handleChangeCurrency = (value) => (ev) => {
-		console.log("----", value);
+		const {currency, changeCurrency} = this.props;
+
+		changeCurrency(value);
 	}
 }
 
 Currency.propTypes = {};
 
-export default Currency;
+export default connect((state) => {
+	return {currency: state.currency}
+}, {changeCurrency})(Currency);

@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import TransferList from "./TransferList";
+import StopsList from "./StopsList";
 
-class Transfer extends Component {
+class Stop extends Component {
 	render() {
 		return (
 			<div>
 				<h6>КОЛИЧЕСТВО ПЕРЕСАДОК</h6>
-				<TransferList/>
+				<StopsList/>
 			</div>
 		);
 	}
 }
 
-Transfer.propTypes = {};
+Stop.propTypes = {};
 
-export default Transfer;
+export default Stop;
