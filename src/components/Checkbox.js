@@ -5,9 +5,9 @@ import {addStop, removeStop} from "../ducks/stops";
 
 class Checkbox extends Component {
 	// завязать state на props
-	static state = {
+	/*state = {
 		checked: false
-	}
+	}*/
 
 	/*componentWillReceiveProps() {
 		this.setState({checked: this.props.checked})
@@ -20,7 +20,7 @@ class Checkbox extends Component {
 
 		return (
 			<div className="pretty p-icon p-curve p-smooth">
-				<input onClick={this.handleChange(info.value)} checked={this.state.checked} type="checkbox"/>
+				<input onChange={this.handleChange(info)} checked={info.checked} type="checkbox"/>
 				<div className="state p-primary-o">
 					<i className="icon mdi mdi-check"></i>
 					<label className='ml-2'> {info.text}</label>
@@ -29,19 +29,26 @@ class Checkbox extends Component {
 		);
 	}
 
-	handleChange = (value) => (ev) => {
-		console.log("----", value, ev)
+	handleChange = (checkbox) => (ev) => {
+		console.log("----", checkbox, ev)
 		// console.log("----", ev.target)
 
-		ev.nativeEvent.preventDefault()
+		// ev.nativeEvent.preventDefault()
 		const {addStop, removeStop} = this.props;
 
 
-		/*if (value === 'all') {
+		/*if (checkbox === 'all') {
 
 		}*/
 
-		addStop(value);
+		if (checkbox.checked) {
+			console.log("--is checked--", "REMOVE!")
+			removeStop(checkbox.value)
+		}
+		else {
+			console.log("--not checked--", "AAADD!")
+			addStop(checkbox.value);
+		}
 	}
 }
 

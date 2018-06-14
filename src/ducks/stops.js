@@ -7,10 +7,11 @@ const REMOVE_STOP = 'REMOVE_STOPS'
 
 // const defaultState = List();
 const stops = [
-	{value: 0, checked: false, text: "без пересадок"},
-	{value: 1, checked: false, text: "1 пересадка"},
-	{value: 2, checked: false, text: "2 пересадки"},
-	{value: 3, checked: false, text: "3 пересадки"}
+	/*{value: "all", checked: true, text: "Все"},*/
+	{value: 0, checked: true, text: "без пересадок"},
+	{value: 1, checked: true, text: "1 пересадка"},
+	{value: 2, checked: true, text: "2 пересадки"},
+	{value: 3, checked: true, text: "3 пересадки"}
 ]
 const StopRecord = new Record({
 	value: null,
@@ -28,9 +29,20 @@ export default function reducer(state = defaultState, action) {
 
 	switch (type) {
 		case ADD_STOP:
-			// console.log("----", state.get(payload.id))
 			return state.setIn([payload.id, 'checked'], true)
-			// return state
+		case REMOVE_STOP:
+			return state.setIn([payload.id, 'checked'], false)
+		// ---
+		case ADD_ALL:
+			const newState = state.map((item, b) => {
+				// console.log("----", item);
+				return item.set('checked', true)
+			})
+
+			/*console.log("----", newState);
+			window.lol = newState;*/
+
+			return newState
 
 		default:
 			return state
@@ -48,5 +60,16 @@ export function removeStop(id) {
 	return {
 		type: REMOVE_STOP,
 		payload: {id}
+	}
+}
+
+export function addAllStops() {
+	return {
+		type: ADD_ALL,
+	}
+}
+export function removeAllStops() {
+	return {
+		type: REMOVE_ALL,
 	}
 }
