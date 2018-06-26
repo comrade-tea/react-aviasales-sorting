@@ -9,9 +9,9 @@ const TranslatedCurrency = (props) => {
 	const currentCurrency = props.currentCurrency;
 
 	return (
-		<div>
+		<span>
 			{Math.ceil(value / currency[currentCurrency])} {currentCurrency}
-		</div>
+		</span>
 	);
 };
 

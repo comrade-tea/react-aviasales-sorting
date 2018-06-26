@@ -10,7 +10,8 @@ class Ticket extends Component {
 		return (
 			<div className="card-ticket">
 				<div className="card-ticket__leftbar">
-					<button className='btn-warning'>Купить за <TranslatedCurrency>{ticket.price}</TranslatedCurrency></button>
+					<button className='button button--orange card-ticket__buy'>Купить <br/><span
+						className="text-nowrap">за <TranslatedCurrency>{ticket.price}</TranslatedCurrency></span></button>
 				</div>
 				<div className="card-ticket__rightbar">
 					<div className="ct-details">
@@ -23,7 +24,7 @@ class Ticket extends Component {
 						</div>
 						<div className="ct-details__stops">
 							<div className="flight-figure">
-								<div className="flight-figure__title">Пересадки: {ticket.stops}</div>
+								<div className="flight-figure__title">{this.handleStops(ticket.stops)}</div>
 								<div className="flight-figure__line"></div>
 								<div className="flight-figure__aircraft"></div>
 							</div>
@@ -39,6 +40,10 @@ class Ticket extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	handleStops = (stops) => {
+		return stops ? `Пересадки: ${stops}` : null
 	}
 }
 

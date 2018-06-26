@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Ticket from "./Ticket";
 import {connect} from "react-redux";
+import {List} from "immutable";
 
 
 class TicketsList extends Component {
@@ -24,13 +25,21 @@ class TicketsList extends Component {
 
 TicketsList.propTypes = {};
 
-export default connect(({tickets, currency}) => {
+export default connect(({tickets, currency, stops}) => {
 	// TODO: фильтрация билетов
+	const stopsArr = stops.toArray();
+	const filter = stopsArr.reduce((acc, item) => {
+		return item.checked ? acc.push(item.value) : acc
+	}, List())
+
+	console.log("----", filter.toArray());
+
 	const filteredTickets = tickets.filter(ticket => {
 		return true
 	})
 
 	return {
-		tickets: filteredTickets
+		tickets: filteredTickets,
+		stops
 	}
 })(TicketsList);

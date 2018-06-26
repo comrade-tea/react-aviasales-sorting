@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Checkbox from "./Checkbox";
 import {connect} from "react-redux";
-import {addAllStops, removeAllStops} from "../ducks/stops";
+import {addAllStops, removeAllStops, removeAllExcept} from "../ducks/stops";
 
 
 class StopsList extends Component {
@@ -9,36 +9,45 @@ class StopsList extends Component {
 		allCheckbox: true
 	}
 
-	componentWillMount() {
+	componentWillReceiveProps(nextProps) {
+		const {stops} = nextProps;
+		const isAllChecked = stops.every(item => item.checked);
 
+		if (isAllChecked)
+			this.setState({allCheckbox: true})
+		else
+			this.setState({allCheckbox: false})
 	}
 
-	/*componentWillReceiveProps() {
-		if (this.state.allCheckbox) {
-			console.log("----", "давай включим все!")
-			this.props.addAllStops();
-		}
-		else {
-			console.log("----", "хохо, давай всё выключим!")
-			this.props.removeAllStops();
-		}
-	}*/
 
 	render() {
 		const {stops} = this.props;
-		const checkboxList = stops.map(item => <li key={item.value} className='transfer-list__item'><Checkbox info={item}/></li>)
 
-		
+		const checkboxList = stops.map(item => (
+				<li key={item.value} className='transfer-list__item'>
+					<Checkbox info={item}/>
+					<button onClick={() => this.handleRemoveAllExcept(item.value)}
+					        className="transfer-list__only"
+					        type='button'>
+						Только
+					</button>
+				</li>
+			)
+		)
+
+
 		return (
 			<div>
 				<ul className='transfer-list'>
-					<div className="pretty p-icon p-curve p-smooth">
-						<input onChange={this.handleAll} checked={this.state.allCheckbox} type="checkbox"/>
-						<div className="state p-primary-o">
-							<i className="icon mdi mdi-check"></i>
-							<label className='ml-2'> Все..</label>
+					<li className='transfer-list__item'>
+						<div className="pretty p-icon p-curve p-smooth">
+							<input onChange={this.handleAll} checked={this.state.allCheckbox} type="checkbox"/>
+							<div className="state p-primary-o">
+								<i className="icon mdi mdi-check"></i>
+								<label className='ml-2'> Все..</label>
+							</div>
 						</div>
-					</div>
+					</li>
 
 					{checkboxList}
 				</ul>
@@ -47,26 +56,29 @@ class StopsList extends Component {
 	}
 
 	handleAll = () => {
-		const {stops, addAllStops, removeAllStops} = this.props
+		const {addAllStops, removeAllStops} = this.props
 		const {allCheckbox} = this.state
 
 		// just toggle
 		this.setState({allCheckbox: !allCheckbox})
-		
 
-		const hasActive = stops.find((el) => {
-			// console.log("----", el.checked)
-			return el.checked
-		})
-
-		if (hasActive) {
-			
+		if (allCheckbox) {
+			// console.log("----", "вырубить все")
+			removeAllStops()
 		}
+		else {
+			// console.log("----", "врубить все")
+			addAllStops()
+		}
+	}
 
-		console.log("--checkboxes has active?--", hasActive)
+	handleRemoveAllExcept = (id) => {
+		const {removeAllExcept} = this.props
+
+		removeAllExcept(id);
 	}
 }
 
 export default connect(({stops}) => {
 	return {stops: stops.toArray()}
-}, {addAllStops, removeAllStops})(StopsList);
+}, {addAllStops, removeAllStops, removeAllExcept})(StopsList);
