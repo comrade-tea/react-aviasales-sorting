@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import TranslatedCurrency from "./currencyProvider/TranslatedCurrency";
+import TranslatedCurrency from "./TranslatedCurrency";
 
 class Ticket extends Component {
 

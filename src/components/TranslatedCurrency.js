@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import currency from "../../availableCurrencies";
+import currency from "../availableCurrencies";
 import {connect} from "react-redux";
 
 

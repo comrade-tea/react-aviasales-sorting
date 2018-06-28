@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {changeCurrency} from "../ducks/currency";
-
+import {arrayToKeyedArr} from "../helpers";
 import PropTypes from 'prop-types';
+
 
 class Currency extends Component {
 	render() {
-		const currency = [{id: 0, value: "RUB"}, {id: 1, value: "USD"}, {id: 2, value: "EUR"}];
+		// const currency = [{id: 0, value: "RUB"}, {id: 1, value: "USD"}, {id: 2, value: "EUR"}];
+		const currency = arrayToKeyedArr(["RUB", "USD", "EUR"]);
+
 		const buttonList = currency.map(item => {
 			return (
-				<button className={this.setButtonStyles(item.value)} key={item.id}
+				<button className={this.setButtonStyles(item.value)} key={item.key}
 				        onClick={this.handleChangeCurrency(item.value)}>
 					{item.value}
 				</button>)
@@ -48,6 +51,6 @@ class Currency extends Component {
 
 Currency.propTypes = {};
 
-export default connect((state) => {
-	return {currency: state.currency}
+export default connect(({currency}) => {
+	return {currency}
 }, {changeCurrency})(Currency);
