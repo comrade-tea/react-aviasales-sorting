@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import TranslatedCurrency from "./TranslatedCurrency";
+import logo from '../img/card-logo.png';
 
 class Ticket extends Component {
 
@@ -10,6 +11,8 @@ class Ticket extends Component {
 		return (
 			<div className="card-ticket">
 				<div className="card-ticket__leftbar">
+					<img className="card-ticket__logo" src={logo} alt=""/>
+
 					<button className='button button--orange card-ticket__buy'>Купить <br/><span
 						className="text-nowrap">за <TranslatedCurrency>{ticket.price}</TranslatedCurrency></span></button>
 				</div>
@@ -43,7 +46,8 @@ class Ticket extends Component {
 	}
 
 	handleStops = (stops) => {
-		return stops ? `Пересадки: ${stops}` : null
+		// return stops ? `Пересадки: ${stops}` : null
+		return `Пересадки: ${stops}`
 	}
 }
 
